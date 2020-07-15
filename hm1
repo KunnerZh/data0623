@@ -1,0 +1,66 @@
+/***Prepare a list of offices sorted by country, state, city.
+How many employees are there in the company?
+What is the total of payments received?
+List the product lines that contain 'Cars'.
+Report total payments for October 28, 2004.
+Report those payments greater than $100,000.
+List the products in each product line.
+How many products in each product line?
+What is the minimum payment received?
+List all payments greater than twice the average payment.
+What is the average percentage markup of the MSRP on buyPrice?
+How many distinct products does ClassicModels sell?
+Report the name and city of customers who don't have sales representatives?
+What are the names of executives with VP or Manager in their title? Use the CONCAT function to combine the employee's first name and last name into a single field for reporting.
+Which orders have a value greater than $5,000?***/
+
+SELECT country, state, city 
+FROM offices;
+
+SELECT count(employeenumber) 
+FROM employees;
+
+SELECT sum(amount) 
+FROM payments;
+
+SELECT productLine FROM productlines
+Where productLine like '%Cars%';
+
+SELECT sum(amount) FROM payments
+WHERE paymentDate = '2004-10-28';
+
+SELECT * FROM payments
+WHERE amount < 100000;
+
+SELECT * FROM products
+ORDER BY productLine;
+
+SELECT productLine, count(productCode) as q
+FROM products
+GROUP BY productLine
+ORDER BY q DESC;
+
+SELECT min(amount) FROM payments;
+
+SELECT amount FROM payments
+WHERE amount > 2 * (select avg(amount) from payments);
+
+SELECT (avg(MSRP) - avg(buyPrice))/avg(buyPrice) 
+FROM products;
+
+SELECT count(productCode) 
+FROM products;
+
+SELECT CustomerName, city 
+FROM customers
+WHERE salesRepEmployeeNumber IS NULL;
+
+SELECT concat(firstName, lastName) 
+FROM employees
+WHERE jobTitle like '%VP%' or jobTitle like '%Manager%';
+
+SELECT * FROM payments
+WHERE amount > 5000
+ORDER BY amount;
+
+
